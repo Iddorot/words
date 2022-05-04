@@ -1,14 +1,39 @@
 import datetime
-
+import uuid
 from django.db import models
 from django.utils import timezone
+from django.conf.global_settings import LANGUAGES
 
-class Word(models.Model):
+
+class BaseModel(models.Model):
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        abstract = True
+
+    
+class UUIDBaseModel(models.Model):
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False, unique=True)
+
+
+    class Meta:
+        abstract = True
+
+class Word(UUIDBaseModel):
     word_text = models.CharField(max_length=200)
-    word_translation = models.CharField(max_length=200, default='DEFAULT VALUE')
-    pub_date = models.DateTimeField('date published')
+
     def __str__(self):
         return self.word_text
-    def was_published_recently(self):
-        return self.pub_date >= timezone.now() - datetime.timedelta(days=1)
 
+
+class Translation(UUIDBaseModel):
+    word = models.ForeignKey(Word, on_delete=models.CASCADE)
+    translation_text = models.CharField(max_length=200)
+    language_text = models.CharField(max_length=7, choices=LANGUAGES)
+
+
+    def __str__(self):
+        return self.translation_text
