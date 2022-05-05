@@ -26,7 +26,7 @@ class Word(UUIDBaseModel):
     word= models.CharField(max_length=200)
 
     def __str__(self):
-        return self.word_text
+        return self.word
 
 
 class Translation(UUIDBaseModel):
@@ -36,4 +36,4 @@ class Translation(UUIDBaseModel):
 
 
     def __str__(self):
-        return self.translation_text
+        return self.translation
