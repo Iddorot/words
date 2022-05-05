@@ -23,7 +23,7 @@ class UUIDBaseModel(models.Model):
         abstract = True
 
 class Word(UUIDBaseModel):
-    word_text = models.CharField(max_length=200)
+    word= models.CharField(max_length=200)
 
     def __str__(self):
         return self.word_text
@@ -31,8 +31,8 @@ class Word(UUIDBaseModel):
 
 class Translation(UUIDBaseModel):
     word = models.ForeignKey(Word, on_delete=models.CASCADE)
-    translation_text = models.CharField(max_length=200)
-    language_text = models.CharField(max_length=7, choices=LANGUAGES)
+    translation= models.CharField(max_length=200)
+    language = models.CharField(max_length=7, choices=LANGUAGES)
 
 
     def __str__(self):
