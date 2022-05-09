@@ -21,6 +21,9 @@ class Word(UUIDBaseModel):
     def __str__(self):
         return self.word
 
+    def get_absolute_url(self):
+        return reverse('word', kwargs={'pk': self.pk})
+
 
 class Translation(UUIDBaseModel):
     word = models.ForeignKey(Word, on_delete=models.CASCADE)
