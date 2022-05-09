@@ -4,14 +4,6 @@ from django.db import models
 from django.utils import timezone
 from django.conf.global_settings import LANGUAGES
 
-
-class BaseModel(models.Model):
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-
-    class Meta:
-        abstract = True
-
     
 class UUIDBaseModel(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
@@ -28,6 +20,9 @@ class Word(UUIDBaseModel):
     def __str__(self):
         return self.word
 
+    def get_absolute_url(self):
+        return reverse('word', kwargs={'pk': self.pk})
+
 
 class Translation(UUIDBaseModel):
     word = models.ForeignKey(Word, on_delete=models.CASCADE)
@@ -37,3 +32,6 @@ class Translation(UUIDBaseModel):
 
     def __str__(self):
         return self.translation
+
+    def get_absolute_url(self):
+        return reverse('translatiom', kwargs={'pk': self.pk})
