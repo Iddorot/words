@@ -5,7 +5,7 @@
 {% block content %}
 {% if user.is_authenticated %}
   Hi {{ user.username }}!
-  <p><a href="{% url 'word-add' %}">Add a new Word</a></p>
+  <p><a href="{% url 'dictionary:word_create' %}">Add a new Word</a></p>
   <p><a href="{% url 'logout' %}">Log Out</a></p>
 {% else %}
   <p>You are not logged in</p>

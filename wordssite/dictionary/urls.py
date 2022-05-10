@@ -1,10 +1,12 @@
-from django.urls import path, reverse
+from django.urls import path, reverse, re_path
 from . import views
 
+app_name = 'dictionary'
 
 urlpatterns = [
-    path('word/add/', views.WordCreateView.as_view(), name='word-add'),
-    path('word/list/', views.word_list_view, name='word-list'),
-    path('word/<int:pk>/', views.WordUpdateView.as_view(), name='word-update'),
-    path('word/<int:pk>/delete/', views.WordDeleteView.as_view(), name='word-delete'),
+    path('', views.WordListView.as_view(), name='all'),
+    re_path('dictionary/<uuid:pk>/detail', views.WordDetailView.as_view(), name='word_detail'),
+    path('dictionary/create/', views.WordCreateView.as_view(), name='word_create'),
+    path('dictionary/<uuid:pk>/update/', views.WordUpdateView.as_view(), name='word_update'),
+    path('dictionary/<uuid:pk>/delete/', views.WordDeleteView.as_view(), name='word_delete'),
 ]

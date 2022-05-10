@@ -13,6 +13,13 @@ class UUIDBaseModel(models.Model):
 
     class Meta:
         abstract = True
+    
+    def get_fields(self):
+        return [(field.verbose_name, field.value_from_object(self))
+                (field.verbose_name, 
+                Genre.objects.get(pk=field.value_from_object(self)).name)
+                for field in self.__class__._meta.fields[1:]
+            ]
 
 class Word(UUIDBaseModel):
     word= models.CharField(max_length=200)
