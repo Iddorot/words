@@ -1,39 +1,29 @@
+from django.views import View
+from django.views.generic.list import ListView
+from django.views.generic.detail import DetailView
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
-from django.shortcuts import render
-from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from .models import Word,Translation
-from .forms import WordForm, TranslationForm
 
 
 
-class WordCreateView(CreateView):
-    success_url = reverse_lazy('word-list')
+
+class WordBaseView(View):
     model = Word
-    fields = ['word']
-    template_name = "add_word.html"
+    fields = '__all__'
+    success_url = reverse_lazy('dictionary:all')
 
-def word_list_view(request):
-    context ={}
-    context["wordlist"] = Word.objects.all()       
-    return render(request, "dictionary_list.html", context)
+class WordListView(WordBaseView, ListView):
+    """View to list all Word"""
 
-class WordUpdateView(UpdateView):
-    model = Word
-    fields = ['word']
+class WordDetailView(WordBaseView, DetailView):
+    """View to list the details from one Word"""
 
-class WordDeleteView(DeleteView):
-    model = Word
-    success_url = reverse_lazy('Word-list')
+class WordCreateView(WordBaseView, CreateView):
+    """View to create a new Word"""
 
+class WordUpdateView(WordBaseView, UpdateView):
+    """View to update a Word"""
 
-class TranslationCreateView(CreateView):
-    model = Translation
-    fields = ['translation', 'language']
-
-class TranslationUpdateView(UpdateView):
-    model = Translation
-    fields = ['translation', 'language']
-
-class TranslationDeleteView(DeleteView):
-    model = Translation
-    success_url = reverse_lazy('Translation-list')
+class WordDeleteView(WordBaseView, DeleteView):
+    """View to delete a Word"""
