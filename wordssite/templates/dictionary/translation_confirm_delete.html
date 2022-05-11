@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 {% extends 'base.html' %}
 
 {% block content %}
@@ -19,3 +20,29 @@
 </div>
 
 {% endblock %}
+||||||| parent of d86efa0 (add to word_detail  all translations)
+=======
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% url 'dictionary:all' as list_all %}
+
+<div class="container d-flex justify-content-center mt-5" style="width: 50%;">
+    <div class="col mt-5 text-center">
+        <h1 class="mb-5">Delete Translation</h1>
+
+        <p class="h5">Are you sure you want to delete the Translation:</p>
+        <h3 class="my-5">{{ Translation}}</h3>
+        <form action="" method="POST">
+            {% csrf_token %}
+            {% comment %} <input type="submit" value="Confirm">
+            <input type="submit" value="Cancel" onclick="window.location='{% url 'dictionary:all' %}'; return false;"> {% endcomment %}
+            <input type="submit" class="btn btn-primary btn-lg" value="Confirm" style="margin-right: 30px; margin-top: 30px;">
+            <input type="submit" class="btn btn-danger btn-lg" style="margin-top: 30px;" onclick="window.location='{{list_all}}'; return false;" value="Cancel">
+        </form>
+    </div>
+</div>
+
+{% endblock %}
+>>>>>>> d86efa0 (add to word_detail  all translations)
