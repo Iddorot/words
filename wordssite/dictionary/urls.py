@@ -1,4 +1,4 @@
-from django.urls import path, reverse
+from django.urls import path, reverse, re_path
 from . import views
 
 app_name = 'dictionary'
