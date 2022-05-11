@@ -27,3 +27,25 @@ class WordUpdateView(WordBaseView, UpdateView):
 
 class WordDeleteView(WordBaseView, DeleteView):
     """View to delete a Word"""
+
+
+
+class TranslationBaseView(View):
+    model = Translation
+    fields = '__all__'
+    success_url = reverse_lazy('dictionary:all')
+
+class TranslationListView(TranslationBaseView, ListView):
+    """View to list all Translation"""
+
+class TranslationDetailView(TranslationBaseView, DetailView):
+    """View to list the details from one Translation"""
+
+class TranslationCreateView(TranslationBaseView, CreateView):
+    """View to create a new Translation"""
+
+class TranslationUpdateView(TranslationBaseView, UpdateView):
+    """View to update a Translation"""
+
+class TranslationDeleteView(TranslationBaseView, DeleteView):
+    """View to delete a Translation"""

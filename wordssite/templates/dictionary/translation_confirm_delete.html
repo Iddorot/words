@@ -6,10 +6,10 @@
 
 <div class="container d-flex justify-content-center mt-5" style="width: 50%;">
     <div class="col mt-5 text-center">
-        <h1 class="mb-5">Delete Word</h1>
+        <h1 class="mb-5">Delete Translation</h1>
 
-        <p class="h5">Are you sure you want to delete the Word:</p>
-        <h3 class="my-5">{{ Word}}</h3>
+        <p class="h5">Are you sure you want to delete the Translation:</p>
+        <h3 class="my-5">{{ Translation}}</h3>
         <form action="" method="POST">
             {% csrf_token %}
             {% comment %} <input type="submit" value="Confirm">
@@ -20,4 +20,4 @@
     </div>
 </div>
 
-{% endblock %}S
+{% endblock %}

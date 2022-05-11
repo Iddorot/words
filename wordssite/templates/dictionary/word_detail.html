@@ -4,33 +4,23 @@
 
 <div class="container mt-5" style="width: 70%;">
     <div class="col">
-        <h1 class="text-center">Word Details</h1>
+        <h1 class="text-center">"{{word}}" translations:</h1>
         <div class="d-flex justify-content-center">
             <table class="table table-striped mt-5" style="width: 50%">
-                <thead>
-                    <tr>
-                        <th scope="col"></th>
-                        <th scope="col"></th>
-                    </tr>
-                </thead>
                 <tbody>
-                
-                    {% for label, value in Word.get_fields  %}
-                        <tr>
-                            <td>{{label | upper}}</td>
-                            <td>{{value}}</td>
-                        </tr>
-                    {% endfor %}
-                        
+                    {% for translation in word.translation_set.all %}                    <tr>
+                        {% comment %} <th scope="row">{{forloop.counter}}</th> {% endcomment %}
+                        <td class="ml-5"><a href="{% url 'dictionary:translation_detail' }">{{translation}}</a></td>
+                    {% endfor %}   
                 </tbody>
             </table>
         </div>
 
         <div class="d-flex justify-content-center">
+            <a href="{% url 'dictionary:translation_create' %}" class="d-block btn btn-primary btn-lg my-5">Add New Translation</a>
             <a href="{% url 'dictionary:all' %}" class="d-block btn btn-primary btn-lg my-5">BACK</a>
         </div>
-    </div>
-        
+    </div>   
 </div>
 
 {% endblock  %}
