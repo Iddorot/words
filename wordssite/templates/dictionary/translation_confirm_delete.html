@@ -1,3 +1,4 @@
+
 {% extends 'base.html' %}
 
 {% block content %}
@@ -9,13 +10,15 @@
         <h1 class="mb-5">Delete Translation</h1>
 
         <p class="h5">Are you sure you want to delete the Translation:</p>
-        <h3 class="my-5">{{translation.translation}}</h3>
+        <h3 class="my-5">{{ Translation}}</h3>
         <form action="" method="POST">
             {% csrf_token %}
-            <input type="submit" class="btn btn-primary btn-lg" value="Confirm" >
-            <a href="{% url 'dictionary:all'%}" class="btn btn-primary btn-lg">Cancel</a>
+            {% comment %} <input type="submit" value="Confirm">
+            <input type="submit" value="Cancel" onclick="window.location='{% url 'dictionary:all' %}'; return false;"> {% endcomment %}
+            <input type="submit" class="btn btn-primary btn-lg" value="Confirm" style="margin-right: 30px; margin-top: 30px;">
+            <input type="submit" class="btn btn-danger btn-lg" style="margin-top: 30px;" onclick="window.location='{{list_all}}'; return false;" value="Cancel">
         </form>
     </div>
 </div>
 
-{% endblock %}
+
