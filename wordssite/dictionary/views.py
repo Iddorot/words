@@ -92,8 +92,6 @@ class TranslationBaseView(View):
 class TranslationListView(TranslationBaseView, ListView):
     """View to list all Translation"""
 
-class TranslationDetailView(TranslationBaseView, DetailView):
-    """View to list the details from one Translation"""
 
 class TranslationCreateView(TranslationBaseView, CreateView):
     """View to create a new Translation"""
