@@ -33,7 +33,7 @@
 =======
                     {% for translation in word.translation_set.all %}                    <tr>
                         {% comment %} <th scope="row">{{forloop.counter}}</th> {% endcomment %}
-                        <td class="ml-5"><a href="{% url 'dictionary:translation_detail' }">{{translation}}</a></td>
+                        <td class="ml-5">{{translation}}-{{translation.language}}</td>
                         <td><a href="{% url 'dictionary:translation_update' translation.id%} ">Update</a></td>
                         <td><a href="{% url 'dictionary:translation_delete' translation.id%}">Delete</a></td>
                     {% endfor %}   
