@@ -9,7 +9,7 @@
         <h1 class="mb-5">Delete Word</h1>
 
         <p class="h5">Are you sure you want to delete the Word:</p>
-        <h3 class="my-5">{{ Word}}</h3>
+        <h3 class="my-5">{{word.word}}</h3>
         <form action="" method="POST">
             {% csrf_token %}
             {% comment %} <input type="submit" value="Confirm">
