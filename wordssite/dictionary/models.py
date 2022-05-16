@@ -3,6 +3,7 @@ import uuid
 from django.db import models
 from django.utils import timezone
 from django.conf.global_settings import LANGUAGES
+import random
 
     
 class UUIDBaseModel(models.Model):
@@ -29,6 +30,15 @@ class Word(UUIDBaseModel):
 
     def get_absolute_url(self):
         return reverse('word', kwargs={'pk': self.pk})
+    
+    def get_random(self):
+        max_id = Word.objects.all().aggregate(max_id=Max("id"))['max_id']
+        while True:
+            pk = random.randint(1, max_id)
+            word = Word.objects.filter(pk=pk).first()
+            if word:
+                return word
+
 
 
 class Translation(UUIDBaseModel):
