@@ -10,7 +10,7 @@ urlpatterns = [
     path('dictionary/<uuid:pk>/update/', views.WordUpdateView.as_view(), name='word_update'),
     path('dictionary/<uuid:pk>/delete/', views.WordDeleteView.as_view(), name='word_delete'),
     
-    path('dictionary/translation/create/', views.TranslationCreateView.as_view(), name='translation_create'),
+    path('dictionary/<uuid:pk>/translation/create/', views.TranslationCreateView.as_view(), name='translation_create'),
     path('dictionary/translation/<uuid:pk>/update/', views.TranslationUpdateView.as_view(), name='translation_update'),
     path('dictionary/translation/<uuid:pk>/delete/', views.TranslationDeleteView.as_view(), name='translation_delete'),
 ]

@@ -4,6 +4,8 @@ from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 from .models import Word,Translation
+from .forms import TranslationForm
+from django.shortcuts import render
 
 
 
@@ -32,8 +34,19 @@ class WordDeleteView(WordBaseView, DeleteView):
 
 class TranslationBaseView(View):
     model = Translation
-    fields = '__all__'
+    fields = 'translation', 'language'
     success_url = reverse_lazy('dictionary:all')
+
+    def post(self, request, pk):
+        if request.method == 'POST':
+            form=TranslationForm(request.POST)
+            if form.is_valid():
+                translation = form.save(commit=False)
+                obj = Word.objects.get(pk=pk)
+                translation.word= obj
+                translation.save()
+        form=TranslationForm()
+        return render(request,'dictionary/word_detail.html', {"form":form})        
 
 class TranslationListView(TranslationBaseView, ListView):
     """View to list all Translation"""
