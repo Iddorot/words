@@ -35,24 +35,23 @@ class WordDeleteView(WordBaseView, DeleteView):
 class TranslationBaseView(View):
     model = Translation
     fields = 'translation', 'language'
-    success_url = reverse_lazy('dictionary:all')
-
-    def post(self, request, pk):
-        if request.method == 'POST':
-            form=TranslationForm(request.POST)
-            if form.is_valid():
-                translation = form.save(commit=False)
-                obj = Word.objects.get(pk=pk)
-                translation.word= obj
-                translation.save()
-        form=TranslationForm()
-        return render(request,'dictionary/word_detail.html', {"form":form})        
+    success_url = reverse_lazy('dictionary:all')   
 
 class TranslationListView(TranslationBaseView, ListView):
     """View to list all Translation"""
 
 
 class TranslationCreateView(TranslationBaseView, CreateView):
+    def post(self, request, pk):
+        if request.method == 'POST':
+            form=TranslationForm(request.POST)
+            if form.is_valid():
+                translation = form.save(commit=False)
+                word = Word.objects.get(pk=pk)
+                translation.word= word
+                translation.save()
+        form=TranslationForm()
+        return render(request,'dictionary/word_detail.html', {'form':form, 'word':word})   
     """View to create a new Translation"""
 
 class TranslationUpdateView(TranslationBaseView, UpdateView):
