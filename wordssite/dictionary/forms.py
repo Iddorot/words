@@ -21,4 +21,3 @@ class TranslationForm(forms.ModelForm):
             "translation",
             "language",
         ]
-

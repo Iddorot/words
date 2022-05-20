@@ -37,8 +37,6 @@ class TranslationBaseView(View):
     fields = 'translation', 'language'
     success_url = reverse_lazy('dictionary:all')   
 
-class TranslationListView(TranslationBaseView, ListView):
-    """View to list all Translation"""
 
 
 class TranslationCreateView(TranslationBaseView, CreateView):
