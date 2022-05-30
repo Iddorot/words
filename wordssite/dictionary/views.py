@@ -19,6 +19,26 @@ class WordListView(WordBaseView, ListView):
     """View to list all Word"""
 
 class WordDetailView(WordBaseView, DetailView):
+    def word_translation(request, word_id):
+        word = get_object_or_404(models.word, id=Word_id)
+        word_form = forms.WordForm(instance=word)
+        translation_form = forms.TranslationForm()
+        if request.method == 'POST':
+            if 'word_translation' in request.POST:
+                word_form = forms.wordForm(request.POST, instance=word)
+                if word_form.is_valid():
+                    word_form.save()
+                    return redirect('home')
+            if 'translation_form' in request.POST:
+                translation_form = forms.TranslationForm(request.POST)
+                if translation_form.is_valid():
+                    word.translation()
+                    return redirect('home')
+        context = {
+            'word_form': word_form,
+            'translation_form': translation_form,
+        }
+        return render(request, 'dictionary/word_detail.html', context=context)
     """View to list the details from one Word"""
 
 class WordCreateView(WordBaseView, CreateView):
@@ -28,7 +48,7 @@ class WordUpdateView(WordBaseView, UpdateView):
     """View to update a Word"""
 
 class WordDeleteView(WordBaseView, DeleteView):
-    """View to delete a Word"""
+    """View to translation a Word"""
 
 
 
@@ -36,7 +56,6 @@ class TranslationBaseView(View):
     model = Translation
     fields = 'translation', 'language'
     success_url = reverse_lazy('dictionary:all')   
-
 
 
 class TranslationCreateView(TranslationBaseView, CreateView):
@@ -56,4 +75,4 @@ class TranslationUpdateView(TranslationBaseView, UpdateView):
     """View to update a Translation"""
 
 class TranslationDeleteView(TranslationBaseView, DeleteView):
-    """View to delete a Translation"""
+    """View to translation a Translation"""

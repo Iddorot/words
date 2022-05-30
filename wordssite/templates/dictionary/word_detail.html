@@ -16,6 +16,9 @@
                 </tbody>
             </table>
             <div class="column is-one-third" style="width: 50%">
+                <form method="post">
+                    {{ translation_form }}
+                    {% csrf_token %}
                 {% include "dictionary/translation_form.html" %}      
             </div>
         </div>
