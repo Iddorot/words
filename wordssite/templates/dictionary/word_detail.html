@@ -16,10 +16,9 @@
                 </tbody>
             </table>
             <div class="column is-one-third" style="width: 50%">
-                <form method="post">
-                    {{ translation_form }}
+                <form action= "" method="post">
                     {% csrf_token %}
-                {% include "dictionary/translation_form.html" %}    
+                    {{formset}}
                 </form>  
             </div>
         </div>

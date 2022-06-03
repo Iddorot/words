@@ -3,9 +3,11 @@ from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
+from django.forms import inlineformset_factory
 from .models import Word,Translation
 from .forms import TranslationForm
 from django.shortcuts import render
+
 
 
 
@@ -19,26 +21,13 @@ class WordListView(WordBaseView, ListView):
     """View to list all Word"""
 
 class WordDetailView(WordBaseView, DetailView):
-    def word_translation(request, word_id):
+
+    def create_translation(request, word_id):
         word = get_object_or_404(models.word, id=Word_id)
-        word_form = forms.WordForm(instance=word)
-        translation_form = forms.TranslationForm()
-        if request.method == 'POST':
-            if 'word_translation' in request.POST:
-                word_form = forms.wordForm(request.POST, instance=word)
-                if word_form.is_valid():
-                    word_form.save()
-                    return redirect('home')
-            if 'translation_form' in request.POST:
-                translation_form = forms.TranslationForm(request.POST)
-                if translation_form.is_valid():
-                    word.translation()
-                    return redirect('home')
-        context = {
-            'word_form': word_form,
-            'translation_form': translation_form,
-        }
-        return render(request, 'dictionary/word_detail.html', context=context)
+        WordFormSet = inlineformset_factory(Word, Translation, fields= ('translation', 'language'))
+        formset = WordFormSet(instance=word)
+        context = {'formset':formset}
+
     """View to list the details from one Word"""
 
 class WordCreateView(WordBaseView, CreateView):
