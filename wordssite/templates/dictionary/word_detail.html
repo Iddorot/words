@@ -8,17 +8,21 @@
         <div class="d-flex justify-content-center">
             <table class="table table-striped mt-5" style="width: 50%">
                 <tbody>
-                    {% for translation in word.translation_set.all %}
+                    {% for translation in word.translation_set.all %}                    <tr>
                         <td class="ml-5">{{translation}}-{{translation.language}}</td>
                         <td><a href="{% url 'dictionary:translation_update' translation.id%} ">Update</a></td>
                         <td><a href="{% url 'dictionary:translation_delete' translation.id%}">Delete</a></td>
+
                     {% endfor %}   
                 </tbody>
             </table>
             <div class="column is-one-third" style="width: 50%">
+                <h2 class="text-center">Add new ones:</h1>
                 <form action= "" method="POST">
                     {% csrf_token %}
-                    {{ formset }}
+                    {% for form in formset %}
+                        {{ form }}
+                    {% endfor %}
                     <input type="submit" name="Sumbit">
                 </form>  
             </div>

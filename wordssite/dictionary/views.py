@@ -21,18 +21,20 @@ class WordBaseView(View):
 class WordListView(WordBaseView, ListView):
     """View to list all Word"""
 
-class WordDetailView(WordBaseView, DetailView):
+class WordDetailView(WordBaseView, UpdateView):
 
     def get(self, request, pk):
-        WordFormSet = inlineformset_factory(Word, Translation, fields= ('translation', 'language'))
-        word = Word.objects.get(id=pk)
-        formset = WordFormSet(instance=word)
+        WordFormSet = inlineformset_factory(Word, Translation, fields= ('translation', 'language'), can_delete=False)
+        word = Word.objects.get(pk=pk)
+        formset = WordFormSet(queryset=Word.objects.none(),instance=word)
 
         if request.method == 'POST':
             formset = WordFormSet(request.POST, instance=word)
             if formset.is_valid():
+                translation.word = word
+                translation.save()
                 formset.save()
-                return redirect('dictionary/word_detail.html')
+                return redirect('dictionary/word_detail.html', context)
 
         context = {'formset':formset, 'word': word}
         return render(request, 'dictionary/word_detail.html', context)
