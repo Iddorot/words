@@ -4,9 +4,10 @@ from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 from django.forms import inlineformset_factory
+
 from .models import Word,Translation
 from .forms import TranslationForm
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
 
 
@@ -22,7 +23,7 @@ class WordListView(WordBaseView, ListView):
 
 class WordDetailView(WordBaseView, DetailView):
 
-    def create_translation(self, request, pk):
+    def get(self, request, pk):
         WordFormSet = inlineformset_factory(Word, Translation, fields= ('translation', 'language'))
         word = Word.objects.get(id=pk)
         formset = WordFormSet(instance=word)
@@ -31,10 +32,10 @@ class WordDetailView(WordBaseView, DetailView):
             formset = WordFormSet(request.POST, instance=word)
             if formset.is_valid():
                 formset.save()
-                return redirect('/')
+                return redirect('dictionary/word_detail.html')
 
-        context = {'formset':formset}
-        return render(request, 'dictionary:word_detail.html', context)
+        context = {'formset':formset, 'word': word}
+        return render(request, 'dictionary/word_detail.html', context)
 
     """View to list the details from one Word"""
 
