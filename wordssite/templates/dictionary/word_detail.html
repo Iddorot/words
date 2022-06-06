@@ -16,9 +16,11 @@
                 </tbody>
             </table>
             <div class="column is-one-third" style="width: 50%">
-                <form action= "" method="post">
+                <form action= "" method="POST">
                     {% csrf_token %}
                     {{formset}}
+
+                    <input type="submit" name="Sumbit">
                 </form>  
             </div>
         </div>

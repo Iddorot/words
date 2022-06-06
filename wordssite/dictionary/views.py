@@ -22,11 +22,19 @@ class WordListView(WordBaseView, ListView):
 
 class WordDetailView(WordBaseView, DetailView):
 
-    def create_translation(request, word_id):
-        word = get_object_or_404(models.word, id=Word_id)
+    def create_translation(self, request, pk):
         WordFormSet = inlineformset_factory(Word, Translation, fields= ('translation', 'language'))
+        word = Word.objects.get(id=pk)
         formset = WordFormSet(instance=word)
+
+        if request.method == 'POST':
+            formset = WordFormSet(request.POST, instance=word)
+            if formset.is_valid():
+                formset.save()
+                return redirect('/')
+
         context = {'formset':formset}
+        return render(request, 'dictionary:word_detail.html', context)
 
     """View to list the details from one Word"""
 
