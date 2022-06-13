@@ -34,13 +34,14 @@ class WordDetailView(WordBaseView, UpdateView):
             
             if formset.is_valid():
                 for form in formset:
+                    form=TranslationForm(request.POST)
                     translation = form.save(commit=False)
                     word = Word.objects.get(pk=pk)
-                    translation.word = word
+                    translation.word= word
                     translation.save()
+                form=TranslationForm()
                 return redirect('dictionary/word_detail.html', context)
-        formset=WordFormSet()
-
+        
         return render(request, 'dictionary/word_detail.html', context)
 
     """View to list the details from one Word"""
