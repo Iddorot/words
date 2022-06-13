@@ -21,8 +21,14 @@
                 <form action= "" method="POST">
                     {% csrf_token %}
                     {% for form in formset %}
-                        {{ form }}
+                        {% for hidden in form.hidden_fields %}
+                            {{ hidden }}
+                        {% endfor %}
+
+                        {{form.translation}}
+                        {{form.language}}
                     {% endfor %}
+
                     <input type="submit" name="Sumbit">
                 </form>  
             </div>

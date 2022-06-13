@@ -24,19 +24,23 @@ class WordListView(WordBaseView, ListView):
 class WordDetailView(WordBaseView, UpdateView):
 
     def get(self, request, pk):
-        WordFormSet = inlineformset_factory(Word, Translation, fields= ('translation', 'language'), can_delete=False)
+        WordFormSet = inlineformset_factory(Word, Translation, fields= ('translation', 'language'), extra = 1)
         word = Word.objects.get(pk=pk)
-        formset = WordFormSet(queryset=Word.objects.none(),instance=word)
+        formset = WordFormSet(instance=word,queryset=Word.objects.none())
+        context = {'formset':formset, 'word': word}
 
         if request.method == 'POST':
-            formset = WordFormSet(request.POST, instance=word)
+            formset = WordFormSet(request.POST)
+            
             if formset.is_valid():
-                translation.word = word
-                translation.save()
-                formset.save()
+                for form in formset:
+                    translation = form.save(commit=False)
+                    word = Word.objects.get(pk=pk)
+                    translation.word = word
+                    translation.save()
                 return redirect('dictionary/word_detail.html', context)
+        formset=WordFormSet()
 
-        context = {'formset':formset, 'word': word}
         return render(request, 'dictionary/word_detail.html', context)
 
     """View to list the details from one Word"""
