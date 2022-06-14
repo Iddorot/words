@@ -4,7 +4,7 @@
 
 <div class="container mt-5" style="width: 70%;">
     <div class="col">
-        <h1 class="text-center">"{{word}}" translations:</h1>
+        <h1 class="text-center">"{{ word }}" translations:</h1>
         <div class="d-flex justify-content-center">
             <table class="table table-striped mt-5" style="width: 50%">
                 <tbody>
@@ -12,20 +12,28 @@
                         <td class="ml-5">{{translation}}-{{translation.language}}</td>
                         <td><a href="{% url 'dictionary:translation_update' translation.id%} ">Update</a></td>
                         <td><a href="{% url 'dictionary:translation_delete' translation.id%}">Delete</a></td>
+
                     {% endfor %}   
                 </tbody>
             </table>
             <div class="column is-one-third" style="width: 50%">
-                <form method="post">
-                    {{ translation_form }}
+                <h2 class="text-center">Add new ones:</h1>
+                <form action= "" method="POST">
                     {% csrf_token %}
-                {% include "dictionary/translation_form.html" %}    
+                    
+                    {{ formset.management_form }}
+
+                    {% for form in formset %}
+                        {{form.translation}}
+                        {{form.language}}
+                    {% endfor %}
+
+                    <input type="submit" class="btn btn-primary btn-lg" value="Submit" style="margin-right: 30px; margin-top: 30px;">
                 </form>  
             </div>
         </div>
 
         <div class="d-flex justify-content-center">
-            <a href="{% url 'dictionary:translation_create' word.id%}" class="d-block btn btn-primary btn-lg my-5">Add New Translation</a>
             <a href="{% url 'dictionary:all' %}" class="d-block btn btn-primary btn-lg my-5">BACK</a>
         </div>
     </div>   
