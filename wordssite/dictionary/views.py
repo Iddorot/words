@@ -35,7 +35,7 @@ class WordDetailView(WordBaseView, UpdateView):
         WordFormSet = inlineformset_factory(Word, Translation, fields= ('translation', 'language'), extra = 1) 
         word = Word.objects.get(pk=pk)
         formset = WordFormSet(request.POST, instance=word)
-        context = {'formset':formset, 'word': word}         
+        context = {'formset':formset, 'word': word}
         if formset.is_valid():
             formset.save()
             return HttpResponseRedirect("")
@@ -62,20 +62,6 @@ class TranslationBaseView(View):
     model = Translation
     fields = 'translation', 'language'
     success_url = reverse_lazy('dictionary:all')   
-
-
-class TranslationCreateView(TranslationBaseView, CreateView):
-    def post(self, request, pk):
-        if request.method == 'POST':
-            form=TranslationForm(request.POST)
-            if form.is_valid():
-                translation = form.save(commit=False)
-                word = Word.objects.get(pk=pk)
-                translation.word= word
-                translation.save()
-        form=TranslationForm()
-        return render(request,'dictionary/word_detail.html', {'form':form, 'word':word})   
-    """View to create a new Translation"""
 
 class TranslationUpdateView(TranslationBaseView, UpdateView):
     """View to update a Translation"""
