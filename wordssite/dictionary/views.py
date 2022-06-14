@@ -19,6 +19,8 @@ class WordBaseView(View):
     fields = '__all__'
     success_url = reverse_lazy('dictionary:all')
 
+
+
 class WordListView(WordBaseView, ListView):
     """View to list all Word"""
 
@@ -57,7 +59,7 @@ class WordCreateView(WordBaseView, CreateView):
     def post(self, request):
         word_form = WordForm(request.POST)
         translation_form = TranslationForm(request.POST)
-        context = {'word_form':word_form,'translation_form':translation_form } 
+        context = {'word_form':word_form,'translation_form':translation_form }
 
         if word_form.is_valid() and translation_form.is_valid():
             word = word_form.save(commit=False)
@@ -79,7 +81,7 @@ class WordUpdateView(WordBaseView, UpdateView):
     """View to update a Word"""
 
 class WordDeleteView(WordBaseView, DeleteView):
-    """View to translation a Word"""
+    """View to delete a Word"""
 
 
 
