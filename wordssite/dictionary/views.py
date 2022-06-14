@@ -42,7 +42,7 @@ class WordDetailView(WordBaseView, UpdateView):
                 translation.word= word
                 translation.save()
             form=TranslationForm()
-        return render('dictionary/word_detail.html', context)
+        return render(request,'dictionary/word_detail.html', context)
 
     """View to list the details from one Word"""
 
