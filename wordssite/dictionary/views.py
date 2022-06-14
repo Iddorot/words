@@ -55,22 +55,23 @@ class WordCreateView(WordBaseView, CreateView):
         return render(request, 'dictionary/word_form.html', context)
     
     def post(self, request):
-        word_form = WordForm()
-        translation_form = TranslationForm()
+        word_form = WordForm(request.POST)
+        translation_form = TranslationForm(request.POST)
         context = {'word_form':word_form,'translation_form':translation_form } 
 
-        if word_form.is_valid():
-            word = form.save(commit=False)
-            word_form .save()
-            translation = form.save(commit=False)
+        if word_form.is_valid() and translation_form.is_valid():
+            word = word_form.save(commit=False)
+            word_form.save()
+            translation = translation_form.save(commit=False)
             translation.word= word
             translation.save()           
             translation_form.save()
-            return HttpResponseRedirect("")
+            next = request.POST.get('next', '/dictionary')
+            return HttpResponseRedirect(next)
         else:
-            print("not work")
+            print(f"Forms is invalid, errors:\n {word_form.errors}")
 
-        return render(request,'dictionary/word_form.html', context)
+        return render(request,'dictionary', context)
     
     """View to create a new Word"""
 
