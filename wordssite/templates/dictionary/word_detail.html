@@ -20,19 +20,12 @@
                 <h2 class="text-center">Add new ones:</h1>
                 <form action= "" method="POST">
                     {% csrf_token %}
+                    
                     {{ formset.management_form }}
+
                     {% for form in formset %}
-                        {{ form.id }}
-                        {% for hidden in form.hidden_fields %}
-                            {{ hidden }} 
-                        {% endfor %}
                         {{form.translation}}
                         {{form.language}}
-                        {% for dict in formset.errors %}
-                            {% for error in dict.values %}
-                                {{ error }}
-                            {% endfor %}
-                        {% endfor %}
                     {% endfor %}
 
                     <input type="submit" class="btn btn-primary btn-lg" value="Submit" style="margin-right: 30px; margin-top: 30px;">

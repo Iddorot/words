@@ -4,6 +4,7 @@ from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 from django.forms import inlineformset_factory
+from django.http import HttpResponseRedirect
 
 from .models import Word,Translation
 from .forms import TranslationForm
@@ -32,16 +33,16 @@ class WordDetailView(WordBaseView, UpdateView):
     
     def post(self, request, pk):
         WordFormSet = inlineformset_factory(Word, Translation, fields= ('translation', 'language'), extra = 1) 
-        formset = WordFormSet(request.POST)
-        word = Word.objects.get(pk=pk)  
+        word = Word.objects.get(pk=pk)
+        formset = WordFormSet(request.POST, instance=word)
         context = {'formset':formset, 'word': word}         
         if formset.is_valid():
-            for form in formset:
-                translation = form.save(commit=False)
-                word = Word.objects.get(pk=pk)
-                translation.word= word
-                translation.save()
-            form=TranslationForm()
+            formset.save()
+            return HttpResponseRedirect("")
+
+        else:
+            print(f"Formset is invalid, errors:\n {formset.errors}")
+
         return render(request,'dictionary/word_detail.html', context)
 
     """View to list the details from one Word"""
