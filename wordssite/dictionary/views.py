@@ -95,4 +95,4 @@ class TranslationUpdateView(TranslationBaseView, UpdateView):
     """View to update a Translation"""
 
 class TranslationDeleteView(TranslationBaseView, DeleteView):
-    """View to translation a Translation"""
+    """View to delete a Translation"""
