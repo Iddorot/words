@@ -51,19 +51,19 @@ class WordDetailView(WordBaseView, UpdateView):
 
 class WordCreateView(WordBaseView, CreateView):   
     def get(self, request):
-        word_form = WordForm()
+        form = WordForm()
         translation_form = TranslationForm()
-        context = {'word_form':word_form,'translation_form':translation_form }       
+        context = {'form':form,'translation_form':translation_form }       
         return render(request, 'dictionary/word_form.html', context)
     
     def post(self, request):
-        word_form = WordForm(request.POST)
+        form = WordForm(request.POST)
         translation_form = TranslationForm(request.POST)
-        context = {'word_form':word_form,'translation_form':translation_form }
+        context = {'form':form,'translation_form':translation_form }
 
-        if word_form.is_valid() and translation_form.is_valid():
-            word = word_form.save(commit=False)
-            word_form.save()
+        if form.is_valid() and translation_form.is_valid():
+            word = form.save(commit=False)
+            form.save()
             translation = translation_form.save(commit=False)
             translation.word= word
             translation.save()           
@@ -71,13 +71,14 @@ class WordCreateView(WordBaseView, CreateView):
             next = request.POST.get('next', '/dictionary')
             return HttpResponseRedirect(next)
         else:
-            print(f"Forms is invalid, errors:\n {word_form.errors}")
+            print(f"Forms is invalid, errors:\n {form.errors}")
 
         return render(request,'dictionary', context)
     
     """View to create a new Word"""
 
 class WordUpdateView(WordBaseView, UpdateView):
+
     """View to update a Word"""
 
 class WordDeleteView(WordBaseView, DeleteView):
