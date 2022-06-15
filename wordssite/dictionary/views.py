@@ -62,7 +62,7 @@ class WordCreateView(WordBaseView, CreateView):
         context = {'form':form,'translation_form':translation_form }
 
         if form.is_valid() and translation_form.is_valid():
-            word = form.save(commit=False)
+            word= form.save(commit=False)
             form.save()
             translation = translation_form.save(commit=False)
             translation.word= word
