@@ -12,13 +12,10 @@ from django.shortcuts import render, redirect
 
 
 
-
-
 class WordBaseView(View):
     model = Word
     fields = '__all__'
     success_url = reverse_lazy('dictionary:all')
-
 
 
 class WordListView(WordBaseView, ListView):
@@ -28,7 +25,6 @@ class WordDetailView(WordBaseView, UpdateView):
     def __init__(self):
         self.WordFormSet = inlineformset_factory(Word, Translation, fields= ('translation', 'language'), extra = 1)
     
-
     def get(self, request, pk):
         word = Word.objects.get(pk=pk)
         formset = self.WordFormSet(instance=word,queryset=Word.objects.none())

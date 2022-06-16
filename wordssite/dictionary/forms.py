@@ -5,7 +5,7 @@ from django.core.exceptions import ValidationError
  
 class WordForm(forms.ModelForm):
     def clean_word(self):
-        word = self.cleaned_data["word"].capitalize()
+        word = self.cleaned_data["word"].title()
 
         if Word.objects.filter(word = word).count()>0:
             raise ValidationError(f"{word} already exist")
@@ -26,8 +26,8 @@ class WordForm(forms.ModelForm):
 class TranslationForm(forms.ModelForm):
 
     def clean_translation(self):
-        translation = self.cleaned_data['translation'].capitalize()
-        
+        translation = self.cleaned_data['translation'].title()
+
         if any(str.isdigit(i) for i in translation):
             raise ValidationError("Please enter letters")
 
