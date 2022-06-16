@@ -5,11 +5,16 @@ from django.core.exceptions import ValidationError
  
 class WordForm(forms.ModelForm):
     def clean_word(self):
-        word = self.cleaned_data["word"]
+        word = self.cleaned_data["word"].capitalize()
+
         if Word.objects.filter(word = word).count()>0:
             raise ValidationError(f"{word} already exist")
 
+        if any(str.isdigit(i) for i in word):
+            raise ValidationError("Please enter letters")
+
         return word
+
     class Meta:
         model = Word
  
@@ -19,6 +24,14 @@ class WordForm(forms.ModelForm):
         
 
 class TranslationForm(forms.ModelForm):
+
+    def clean_translation(self):
+        translation = self.cleaned_data['translation'].capitalize()
+        
+        if any(str.isdigit(i) for i in translation):
+            raise ValidationError("Please enter letters")
+
+        return translation
  
     class Meta:
         model = Translation
