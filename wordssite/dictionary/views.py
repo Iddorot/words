@@ -73,7 +73,7 @@ class WordCreateView(WordBaseView, CreateView):
         else:
             print(f"Forms is invalid, errors:\n {form.errors}")
 
-        return render(request,'dictionary', context)
+        return render(request,'dictionary/word_form.html', context)
     
     """View to create a new Word"""
 
