@@ -68,7 +68,7 @@ class WordCreateView(WordBaseView, CreateView):
             next = request.POST.get('next', '/dictionary')
             return HttpResponseRedirect(next)
         else:
-            print(f"Forms is invalid, errors:\n {form.errors}")
+            print(f"Forms are invalid, errors:\n {form.errors}")
 
         return render(request,'dictionary/word_form.html', context)
     
