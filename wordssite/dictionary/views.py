@@ -6,7 +6,7 @@ from django.urls import reverse_lazy
 from django.forms import inlineformset_factory
 from django.http import HttpResponseRedirect
 
-from .models import Word,Translation
+from .models import Word, Translation
 from .forms import TranslationForm, WordForm
 from django.shortcuts import render, redirect
 
