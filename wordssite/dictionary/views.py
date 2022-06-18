@@ -5,7 +5,6 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 from django.forms import inlineformset_factory
 from django.http import HttpResponseRedirect
-
 from .models import Word,Translation
 from .forms import TranslationForm, WordForm
 from django.shortcuts import render, redirect
@@ -16,7 +15,6 @@ class WordBaseView(View):
     model = Word
     fields = '__all__'
     success_url = reverse_lazy('dictionary:all')
-
 
 class WordListView(WordBaseView, ListView):
     """View to list all Word"""
@@ -41,16 +39,13 @@ class WordDetailView(WordBaseView, UpdateView):
 
         return render(request,'dictionary/word_detail.html', context)
 
-    """View to list the details from one Word"""
-
 class WordCreateView(WordBaseView, CreateView):   
     def get(self, request):
         form = WordForm()
         translation_form = TranslationForm()
         context = {'form':form,'translation_form':translation_form }       
         return render(request, 'dictionary/word_form.html', context)
-        
-    
+            
     def post(self, request):
         form = WordForm(request.POST)
         translation_form = TranslationForm(request.POST)
@@ -67,17 +62,12 @@ class WordCreateView(WordBaseView, CreateView):
             return HttpResponseRedirect(next)
 
         return render(request,'dictionary/word_form.html', context)
-    
-    """View to create a new Word"""
 
 class WordUpdateView(WordBaseView, UpdateView):
-
     """View to update a Word"""
 
 class WordDeleteView(WordBaseView, DeleteView):
     """View to delete a Word"""
-
-
 
 class TranslationBaseView(View):
     model = Translation
