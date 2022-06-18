@@ -7,7 +7,7 @@ class WordForm(forms.ModelForm):
     def clean_word(self):
         word = self.cleaned_data["word"].title()
 
-        if Word.objects.filter(word = word).count()>0:
+        if Word.objects.filter(word = word).exists():
             raise ValidationError(f"{word} already exist")
 
         if any(str.isdigit(i) for i in word):
