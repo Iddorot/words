@@ -10,8 +10,8 @@ class WordForm(forms.ModelForm):
         if Word.objects.filter(word = word).exists():
             raise ValidationError(f"{word} already exist")
 
-        if any(str.isdigit(i) for i in word):
-            raise ValidationError("Please enter letters")
+        if not word.isalpha():
+            raise ValidationError("Please only enter letters")
 
         return word
 
