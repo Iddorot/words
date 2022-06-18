@@ -6,7 +6,7 @@ from django.urls import reverse_lazy
 from django.forms import inlineformset_factory
 from django.http import HttpResponseRedirect
 
-from .models import Word,Translation
+from .models import Word, Translation
 from .forms import TranslationForm, WordForm
 from django.shortcuts import render, redirect
 
@@ -68,7 +68,7 @@ class WordCreateView(WordBaseView, CreateView):
             next = request.POST.get('next', '/dictionary')
             return HttpResponseRedirect(next)
         else:
-            print(f"Forms is invalid, errors:\n {form.errors}")
+            print(f"Forms are invalid, errors:\n {form.errors}")
 
         return render(request,'dictionary/word_form.html', context)
     
