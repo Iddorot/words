@@ -6,7 +6,7 @@ from django.urls import reverse_lazy
 from django.forms import inlineformset_factory
 from django.http import HttpResponseRedirect
 
-from .models import Word, Translation
+from .models import Word,Translation
 from .forms import TranslationForm, WordForm
 from django.shortcuts import render, redirect
 
@@ -39,9 +39,6 @@ class WordDetailView(WordBaseView, UpdateView):
             formset.save()
             return HttpResponseRedirect("")
 
-        else:
-            print(f"Formset is invalid, errors:\n {formset.errors}")
-
         return render(request,'dictionary/word_detail.html', context)
 
     """View to list the details from one Word"""
@@ -52,6 +49,7 @@ class WordCreateView(WordBaseView, CreateView):
         translation_form = TranslationForm()
         context = {'form':form,'translation_form':translation_form }       
         return render(request, 'dictionary/word_form.html', context)
+        
     
     def post(self, request):
         form = WordForm(request.POST)
@@ -63,12 +61,10 @@ class WordCreateView(WordBaseView, CreateView):
             form.save()
             translation = translation_form.save(commit=False)
             translation.word= word
-            translation.save()           
+            translation.save()  
             translation_form.save()
             next = request.POST.get('next', '/dictionary')
             return HttpResponseRedirect(next)
-        else:
-            print(f"Forms are invalid, errors:\n {form.errors}")
 
         return render(request,'dictionary/word_form.html', context)
     
