@@ -1,15 +1,15 @@
 {% extends 'base.html' %}
-
+{% load word_filters %}
 {% block title %}Home{% endblock %}
 
 {% block content %}
 {% if user.is_authenticated %}
   Hi {{ user.username }}!
-  <p><a href="{% url 'dictionary:all' %}">My Words</a></p>
-  <p><a href="{% url 'logout' %}">Log Out</a></p>
+  total number of words :{% total_words %}
 {% else %}
   <p>You are not logged in</p>
-  <a href="{% url 'login' %}">Log In</a>
-  <a href="{% url 'signup' %}">Create new user</a>
 {% endif %}
 {% endblock %}
+ 
+
+
