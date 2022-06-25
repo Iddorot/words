@@ -65,9 +65,6 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
-            'libraries':  {
-                'word_filters': 'dictionary.templatetags.word_filters',
-            }
         },
     },
 ]
