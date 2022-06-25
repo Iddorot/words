@@ -20,7 +20,6 @@
             <tbody>
                 {% for word in word_list %}
                 <tr>
-                    <th scope="row">{{forloop.counter}}</th>
                     <td class="ml-5"><a href="{% url 'dictionary:word_detail' word.id%}">{{word.word}}</a></td>
                     <td><a href="{% url 'dictionary:word_update' word.id%} ">Update</a></td>
                     <td><a href="{% url 'dictionary:word_delete' word.id%}">Delete</a></td>
