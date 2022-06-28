@@ -34,10 +34,8 @@ class WordDetailView(WordBaseView, UpdateView):
         formset = self.WordFormSet(request.POST, instance=word)
         context = {'formset':formset, 'word': word}
         if formset.is_valid():
-            formset.save()
-            return HttpResponseRedirect("")
-
-        return render(request,'dictionary/word_detail.html', context)
+            formset.save()    
+        return HttpResponseRedirect("")
 
 class WordCreateView(WordBaseView, CreateView):   
     def get(self, request):
@@ -56,8 +54,7 @@ class WordCreateView(WordBaseView, CreateView):
             form.save()
             translation = translation_form.save(commit=False)
             translation.word= word
-            translation.save()  
-            translation_form.save()
+            translation.save()
             next = request.POST.get('next', '/dictionary')
             return HttpResponseRedirect(next)
 
