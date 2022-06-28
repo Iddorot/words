@@ -1,11 +1,9 @@
 {% extends 'base.html' %}
-{% load word_filters %}
 {% block title %}Home{% endblock %}
 
 {% block content %}
 {% if user.is_authenticated %}
   Hi {{ user.username }}!
-  total number of words :{% total_words %}
 {% else %}
   <p>You are not logged in</p>
 {% endif %}
