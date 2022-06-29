@@ -43,3 +43,4 @@ class Translation(UUIDBaseModel):
 
     def __str__(self):
         return self.translation
+        

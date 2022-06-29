@@ -24,7 +24,6 @@ class WordForm(forms.ModelForm):
         
 
 class TranslationForm(forms.ModelForm):
-
     def clean_translation(self):
         translation = self.cleaned_data['translation'].title()
 
@@ -41,3 +40,4 @@ class TranslationForm(forms.ModelForm):
             "translation",
             "language",
         ]
+    
