@@ -12,30 +12,24 @@
                         <td class="ml-5">{{translation}}-{{translation.language}}</td>
                         <td><a href="{% url 'dictionary:translation_update' translation.id%} ">Update</a></td>
                         <td><a href="{% url 'dictionary:translation_delete' translation.id%}">Delete</a></td>
-
-                    {% endfor %}   
+                    {% endfor %}
                 </tbody>
-                
             </table>
             <div class="align-self-center" style="width: 100%">
-                <h2 class="text-center">Add new ones:</h1>
                 <form action= "" method="POST">
-                    {% csrf_token %}
-                    
+                    {% csrf_token %} 
                     {{ formset.management_form }}
 
                     {% for form in formset %}
-                        {{form.translation}}
-                        {{form.language}}
+                    <td class="ml-5">{{form.translation}}  {{form.language}}</td>
                     {% endfor %}
-
-                    <input type="submit" class="btn btn-primary btn-lg" value="Submit" style="margin-right: 30px; margin-top: 30px;">
+                    <td class="ml-5"><input type="submit" class="btn btn-light btn-sm btn-outline-dark" value="Submit"></td>
                 </form>  
             </div>
         </div>
 
         <div class="d-flex justify-content-center">
-            <a href="{% url 'dictionary:all' %}" class="d-block btn btn-primary btn-lg my-5">BACK</a>
+            <a href="{% url 'dictionary:all' %}" class="d-block btn btn-primary btn-lg my-5 ">Back</a>
         </div>
     </div>   
 </div>

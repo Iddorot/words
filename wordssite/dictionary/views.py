@@ -3,11 +3,12 @@ from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
-from django.forms import inlineformset_factory
+from django.forms import inlineformset_factory, TextInput
 from django.http import HttpResponseRedirect
 from .models import Word,Translation
 from .forms import TranslationForm, WordForm
 from django.shortcuts import render, redirect
+
 
 
 
@@ -21,8 +22,8 @@ class WordListView(WordBaseView, ListView):
 
 class WordDetailView(WordBaseView, UpdateView):
     def __init__(self):
-        self.WordFormSet = inlineformset_factory(Word, Translation, fields= ('translation', 'language'), extra = 1)
-    
+        self.WordFormSet = inlineformset_factory(Word, Translation, fields= ('translation', 'language'), extra = 1,
+                                                widgets={'translation': TextInput(attrs={'placeholder': 'Add Translation'})})  
     def get(self, request, pk):
         word = Word.objects.get(pk=pk)
         formset = self.WordFormSet(instance=word,queryset=Word.objects.none())
