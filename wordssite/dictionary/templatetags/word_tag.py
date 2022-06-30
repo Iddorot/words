@@ -1,5 +1,6 @@
 from django import template
-from models import Word
+from dictionary.models import Word
+import random
 
 register = template.Library()
 
