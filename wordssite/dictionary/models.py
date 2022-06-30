@@ -32,11 +32,11 @@ class Word(UUIDBaseModel):
         if number_of_objects < num :
             for i in range(number_of_objects):
                 random_item = random.choice(items)
-                print(random_item)
+                return random_item
         else:
             for i in range(num):
                 random_item = random.choice(items)
-                print(random_item)
+                return random_item
 
 
 class Translation(UUIDBaseModel):

@@ -4,6 +4,9 @@
 {% block content %}
 {% if user.is_authenticated %}
   Hi {{ user.username }}!
+  {% load word_tag %}
+  {% get_random %}
+
 {% else %}
   <p>You are not logged in</p>
 {% endif %}
