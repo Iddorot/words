@@ -24,15 +24,19 @@ class Word(UUIDBaseModel):
 
     def get_absolute_url(self):
         return reverse('word', kwargs={'pk': self.pk})
-    
-    def get_random(self):
-        max_id = Word.objects.all().aggregate(max_id=Max("id"))['max_id']
-        while True:
-            pk = random.randint(1, max_id)
-            word = Word.objects.filter(pk=pk).first()
-            if word:
-                return word
 
+    def get_random():
+        items = list(Word.objects.all())
+        number_of_objects = len(items)
+        num = 10
+        if number_of_objects < num :
+            for i in range(number_of_objects):
+                random_item = random.choice(items)
+                print(random_item)
+        else:
+            for i in range(num):
+                random_item = random.choice(items)
+                print(random_item)
 
 
 class Translation(UUIDBaseModel):
