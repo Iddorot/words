@@ -26,7 +26,7 @@ class Word(UUIDBaseModel):
         return reverse('word', kwargs={'pk': self.pk})
 
     def get_random():
-        list_all_words = list(Word.objects.values('word'))
+        list_all_words = list(Word.objects.all())
         number_of_objects = Word.objects.count()
         num = 10
         if number_of_objects < num :

@@ -4,9 +4,16 @@
 {% block content %}
 {% if user.is_authenticated %}
   Hi {{ user.username }}!
-  
+
   {% for word in random_words %}
-  <li>{{ word.word }}</li>
+  <div class="scene scene--card">
+    <div class="card">
+      <div class="card__face card__face--front">{{ word.word }}</div>
+      {%for translation in word.translation_set.all%}
+        <div class="card__face card__face--back">{{translation}}-{{translation.language}}</div>
+      {% endfor %}
+    </div>
+  </div>
   {% endfor %}
 {% else %}
   <p>You are not logged in</p>
