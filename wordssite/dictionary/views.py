@@ -10,8 +10,6 @@ from .forms import TranslationForm, WordForm
 from django.shortcuts import render, redirect
 
 
-
-
 class WordBaseView(View):
     model = Word
     fields = '__all__'
@@ -19,6 +17,12 @@ class WordBaseView(View):
 
 class WordListView(WordBaseView, ListView):
     """View to list all Word"""
+
+class WordHomeView(WordBaseView, ListView):
+    def get(self, request):
+        random_words = Word.get_random()
+        context = {'random_words':random_words}
+        return render(request, 'home.html',context)
 
 class WordDetailView(WordBaseView, UpdateView):
     def __init__(self):

@@ -25,6 +25,17 @@ class Word(UUIDBaseModel):
     def get_absolute_url(self):
         return reverse('word', kwargs={'pk': self.pk})
 
+    def get_random():
+        list_all_words = list(Word.objects.values('word'))
+        number_of_objects = Word.objects.count()
+        num = 10
+        if number_of_objects < num :
+            random_words = random.sample(list_all_words, number_of_objects)
+        else:
+            random_words = random.sample(list_all_words, num)
+
+        return random_words
+
 class Translation(UUIDBaseModel):
     word = models.ForeignKey(Word, on_delete=models.CASCADE)
     translation= models.CharField(max_length=200)
