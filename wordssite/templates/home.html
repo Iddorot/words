@@ -3,8 +3,6 @@
 
 {% block content %}
 {% if user.is_authenticated %}
-  Hi {{ user.username }}!
-
   {% for word in random_words %}
   <div class="scene scene--card">
     <div class="card">
