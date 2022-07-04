@@ -1,5 +1,4 @@
-{%load static %}
-
+{% load static %}
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,6 +9,8 @@
   <script  type="text/javascript" src="{% static '/scripts/card.js' %}"></script> 
 </head>
 <body>
+  {% block script %}
+  {% endblock script %}
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <a class="navbar-brand">WORDS APP</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
