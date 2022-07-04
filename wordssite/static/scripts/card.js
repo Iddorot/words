@@ -1,4 +1,3 @@
-console.log("are we loading?")
 function flip_card(cards) {
   cards.forEach((card)=>{
     card.addEventListener( 'click', function(){
@@ -7,7 +6,6 @@ function flip_card(cards) {
   })}
 
 window.onload = () => {
-  console.log("yes")
   var cards = document.querySelectorAll('.card');
   flip_card(cards)
 };
