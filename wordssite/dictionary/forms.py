@@ -34,8 +34,15 @@ class TranslationForm(forms.ModelForm):
 
     class Meta:
         model = Translation
+<<<<<<< HEAD
 
         exclude = ("word",)
+||||||| 2995d1d
+
+        exclude = ("word", )
+=======
+        exclude = ("word", )
+>>>>>>> 71446582c9f2768170a6deff548451d897894ea0
         fields = [
             "translation",
             "language",
