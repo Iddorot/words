@@ -7,9 +7,11 @@
   <div class="scene scene--card">
     <div class="card">
       <div class="card__face card__face--front">{{ word.word }}</div>
+      <div class="card__face card__face--back">
       {%for translation in word.translation_set.all%}
-        <div class="card__face card__face--back">{{translation}}-{{translation.language}}</div>
+        <p> {{translation}}-{{translation.language}}</p>
       {% endfor %}
+    </div>
     </div>
   </div>
   {% endfor %}
