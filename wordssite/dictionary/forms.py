@@ -36,6 +36,9 @@ class TranslationForm(forms.ModelForm):
         model = Translation
 
         exclude = ("word",)
+        
+        exclude = ("word", )
+        
         fields = [
             "translation",
             "language",
