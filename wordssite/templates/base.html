@@ -1,11 +1,44 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
 <head>
   <meta charset="utf-8">
   <title>{% block title %}Dictionary{% endblock %}</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link type="text/css" rel="stylesheet" href="{% static '/styles/card.css' %}">
+  <script  type="text/javascript" src="{% static '/scripts/card.js' %}"></script> 
 </head>
 <body>
-  <main>
+  {% block script %}
+  {% endblock script %}
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand">
+      <img src="{% static '/images/logo.png' %}" alt="My image" alt="" width="50" height="44">
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse d-flex" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item active">
+          <a class="nav-link" href="{% url 'dictionary:home' %}">Home <span class="sr-only">(current)</span></a>
+        </li>
+        {% if user.is_authenticated %}
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'dictionary:all' %}">My Words</a>
+            <li class="nav-item ">
+              <a class="nav-link" href="{% url 'logout' %}">Log Out</a>
+          {% else %}
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'login' %}">Log In</a>
+            <li class="nav-item"></li>
+              <a class="nav-link" href="{% url 'signup' %}">Create new user</a>
+          {% endif %}
+        </li>
+      </ul>
+    </div>
+  </nav>  
+  <main> 
     {% block content %}
     {% endblock %}
   </main>

@@ -12,8 +12,8 @@
         <h3 class="my-5">{{translation.translation}}</h3>
         <form action="" method="POST">
             {% csrf_token %}
-            <input type="submit" class="btn btn-primary btn-lg" value="Confirm" style="margin-right: 30px; margin-top: 30px;">
-            <a href="{% url 'dictionary:all'%}" class="btn btn-primary btn-lg"  style="margin-right: 30px; margin-top: 30px;">Cancel</a>
+            <input type="submit" class="btn btn-primary btn-lg" value="Confirm" >
+            <a href="{% url 'dictionary:all'%}" class="btn btn-primary btn-lg">Cancel</a>
         </form>
     </div>
 </div>

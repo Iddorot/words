@@ -5,5 +5,7 @@ name = "pypi"
 
 [packages]
 django = "==4.0.4"
+black = "*"
+flake8 = "*"
 
 [dev-packages]
