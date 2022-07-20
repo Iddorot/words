@@ -30,8 +30,8 @@ class WordHomeView(WordBaseView, ListView):
 class WordDetailView(WordBaseView, UpdateView):
     def __init__(self):
         self.WordFormSet = inlineformset_factory(
-            Word,
-            Translation,
+            Word,Translation,
+            form=TranslationForm,
             fields=("translation", "language"),
             extra=1,
             widgets={
@@ -48,7 +48,7 @@ class WordDetailView(WordBaseView, UpdateView):
     def post(self, request, pk):
         word = Word.objects.get(pk=pk)
         formset = self.WordFormSet(request.POST, instance=word)
-        context = {"formset": formset, "word": word}
+        context = {"formset": formset, "word": word,}
         if formset.is_valid():
             formset.save()
         return HttpResponseRedirect("")

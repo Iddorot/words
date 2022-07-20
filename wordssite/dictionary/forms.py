@@ -24,13 +24,15 @@ class WordForm(forms.ModelForm):
 
 
 class TranslationForm(forms.ModelForm):
-    def clean_translation(self, word):
+    def clean_translation(self):
         translation = self.cleaned_data["translation"].title()
-
-        if Translation.objects.filter(word=word, translation=translation).exists():
+        print(Translation.word)
+        if Translation.objects.filter(translation=translation).exists():
+            print("this transtion exist")
             raise ValidationError(f"{translation} already exist")
 
         if any(str.isdigit(i) for i in translation):
+            print("Please enter letters")
             raise ValidationError("Please enter letters")
 
         return translation
