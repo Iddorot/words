@@ -74,7 +74,6 @@ class WordCreateView(WordBaseView, CreateView):
             translation.save()
             next = request.POST.get("next", "/dictionary")
             return HttpResponseRedirect(next)
-
         return render(request, "dictionary/word_form.html", context)
 
 
