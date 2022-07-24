@@ -1,6 +1,7 @@
 from django import forms
 from .models import Word, Translation
 from django.core.exceptions import ValidationError
+from django.forms import inlineformset_factory, TextInput
 
 
 class WordForm(forms.ModelForm):
@@ -26,15 +27,8 @@ class WordForm(forms.ModelForm):
 class TranslationForm(forms.ModelForm):
     def clean_translation(self):
         translation = self.cleaned_data["translation"].title()
-        print(Translation.word)
-        if Translation.objects.filter(translation=translation).exists():
-            print("this transtion exist")
-            raise ValidationError(f"{translation} already exist")
-
         if any(str.isdigit(i) for i in translation):
-            print("Please enter letters")
             raise ValidationError("Please enter letters")
-
         return translation
 
     class Meta:
@@ -44,3 +38,20 @@ class TranslationForm(forms.ModelForm):
             "translation",
             "language",
         ]
+
+class TranslationFormset(inlineformset_factory(
+            Word,Translation,
+            form=TranslationForm,
+            fields=("translation", "language"),
+            extra=1,
+            widgets={
+                "translation": TextInput(attrs={"placeholder": "Add Translation"})
+            },
+        )):
+
+    def clean(self):
+        word =self.instance.id
+        translation = self.cleaned_data[0]['translation']
+        if Translation.objects.filter(translation=translation,word = word).exists():
+            raise ValidationError(f"{word} already exist")
+        return translation 

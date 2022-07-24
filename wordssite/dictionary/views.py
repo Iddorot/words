@@ -3,10 +3,9 @@ from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
-from django.forms import inlineformset_factory, TextInput
 from django.http import HttpResponseRedirect
 from .models import Word, Translation
-from .forms import TranslationForm, WordForm
+from .forms import TranslationForm, WordForm, TranslationFormset
 from django.shortcuts import render, redirect
 
 
@@ -28,26 +27,16 @@ class WordHomeView(WordBaseView, ListView):
 
 
 class WordDetailView(WordBaseView, UpdateView):
-    def __init__(self):
-        self.WordFormSet = inlineformset_factory(
-            Word,Translation,
-            form=TranslationForm,
-            fields=("translation", "language"),
-            extra=1,
-            widgets={
-                "translation": TextInput(attrs={"placeholder": "Add Translation"})
-            },
-        )
 
     def get(self, request, pk):
         word = Word.objects.get(pk=pk)
-        formset = self.WordFormSet(instance=word, queryset=Word.objects.none())
+        formset = TranslationFormset(instance=word, queryset=Word.objects.none())
         context = {"formset": formset, "word": word}
         return render(request, "dictionary/word_detail.html", context)
 
     def post(self, request, pk):
         word = Word.objects.get(pk=pk)
-        formset = self.WordFormSet(request.POST, instance=word)
+        formset = TranslationFormset(request.POST, instance=word)
         context = {"formset": formset, "word": word,}
         if formset.is_valid():
             formset.save()
