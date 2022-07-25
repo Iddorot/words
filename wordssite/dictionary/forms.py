@@ -50,8 +50,16 @@ class TranslationFormset(inlineformset_factory(
         )):
 
     def clean(self):
+        if any(self.errors):
+            return
+            
+        if not any(self.cleaned_data):
+            return
+            
         word =self.instance.id
-        translation = self.cleaned_data[0]['translation']
-        if Translation.objects.filter(translation=translation,word = word).exists():
-            raise ValidationError(f"{word} already exist")
-        return translation 
+        if self.cleaned_data:
+            translation = self.cleaned_data[0]['translation']
+            if Translation.objects.filter(translation=translation,word = word).exists():
+                raise ValidationError(f"{translation} already exist")
+
+        return translation
