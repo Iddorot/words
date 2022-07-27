@@ -19,7 +19,6 @@
                 <form action= "" method="POST">
                     {% csrf_token %} 
                     {{ formset.management_form }}
-
                     {% for form in formset %}
                     <td class="ml-5">{{form.translation}}  {{form.language}}</td>
                     {% endfor %}
