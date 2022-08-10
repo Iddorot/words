@@ -41,7 +41,7 @@ class WordDetailView(WordBaseView, UpdateView):
         if formset.is_valid():
             formset.save()
         print(formset.non_form_errors())
-        return HttpResponseRedirect("")
+        return HttpResponseRedirect("#")
 
 
 class WordCreateView(WordBaseView, CreateView):
