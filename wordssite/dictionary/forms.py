@@ -62,6 +62,5 @@ class TranslationFormset(inlineformset_factory(
                 raise ValidationError ("please fill the needed data")
         if not any(self.cleaned_data):
                 raise ValidationError ("please fill the needed data")
-
         if check_if_exists(self):
             return translation

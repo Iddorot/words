@@ -20,6 +20,7 @@
                     {% csrf_token %} 
                     {{ formset.management_form }}
                     {% for form in formset %}
+                    <ul class="errorlist">{{formset.non_form_errors}}</ul>
                     <td class="ml-5">{{form.translation}}  {{form.language}}</td>
                     {% endfor %}
                     <td class="ml-5"><input type="submit" class="btn btn-light btn-sm btn-outline-dark" value="Submit"></td>

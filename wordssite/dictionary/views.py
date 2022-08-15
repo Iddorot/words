@@ -40,8 +40,9 @@ class WordDetailView(WordBaseView, UpdateView):
         context = {"formset": formset, "word": word,}
         if formset.is_valid():
             formset.save()
-        print(formset.non_form_errors())
-        return HttpResponseRedirect("#")
+            return HttpResponseRedirect("#")
+        else:
+            return render(request, "dictionary/word_detail.html", context)
 
 
 class WordCreateView(WordBaseView, CreateView):
