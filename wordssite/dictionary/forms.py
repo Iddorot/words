@@ -9,7 +9,7 @@ class WordForm(forms.ModelForm):
         word = self.cleaned_data["word"].title()
 
         if Word.objects.filter(word=word).exists():
-            raise ValidationError(f"{word} already exist")
+            raise ValidationError(f"{word} already exists")
 
         if not word.isalpha():
             raise ValidationError("Please only enter letters")
@@ -56,8 +56,7 @@ class TranslationFormset(inlineformset_factory(
             if self.cleaned_data:
                 translation = self.cleaned_data[0]['translation']
                 if Translation.objects.filter(translation=translation,word = word).exists():
-                    raise ValidationError(f"{translation} already exist")
-
+                    raise ValidationError(f"{translation} already exists")
         if any(self.errors):
                 raise ValidationError ("please fill the needed data")
         if not any(self.cleaned_data):

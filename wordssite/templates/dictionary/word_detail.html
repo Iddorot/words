@@ -19,11 +19,15 @@
                 <form action= "" method="POST">
                     {% csrf_token %} 
                     {{ formset.management_form }}
-                    {% for form in formset %}
-                    <ul class="errorlist">{{formset.non_form_errors}}</ul>
-                    <td class="ml-5">{{form.translation}}  {{form.language}}</td>
-                    {% endfor %}
-                    <td class="ml-5"><input type="submit" class="btn btn-light btn-sm btn-outline-dark" value="Submit"></td>
+                    <table class="table d-flex p-2" style="width: 100%">
+                        <tbody>
+                            {% for form in formset %}
+                            <div class="alert-danger">{{formset.non_form_errors.as_text}}</div>
+                            <td class="ml-5">{{form.translation}}  {{form.language}}</td>
+                            {% endfor %}
+                            <td class="ml-5"><input type="submit" class="btn btn-light btn-sm btn-outline-dark" value="Submit"></td>
+                        </tbody>
+                    </table>
                 </form>  
             </div>
         </div>
