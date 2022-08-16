@@ -5,36 +5,35 @@
 <div class="container mt-5" style="width: 70%;">
     <div class="col">
         <h1 class="text-center">"{{ word }}" translations:</h1>
-        <div class="d-flex justify-content-center">
-            <table class="table table-striped mt-5" style="width: 50%">
+        <div class="d-flex justify-content-center flex-column">
+            <table class="table table-striped mt-5" style="width: 100%">
                 <tbody>
                     {% for translation in word.translation_set.all %}                    <tr>
                         <td class="ml-5">{{translation}}-{{translation.language}}</td>
                         <td><a href="{% url 'dictionary:translation_update' translation.id%} ">Update</a></td>
                         <td><a href="{% url 'dictionary:translation_delete' translation.id%}">Delete</a></td>
-
-                    {% endfor %}   
+                    {% endfor %}
                 </tbody>
             </table>
-            <div class="column is-one-third" style="width: 50%">
-                <h2 class="text-center">Add new ones:</h1>
+            <div class="align-self-center" style="width: 100%">
                 <form action= "" method="POST">
-                    {% csrf_token %}
-                    
+                    {% csrf_token %} 
                     {{ formset.management_form }}
-
-                    {% for form in formset %}
-                        {{form.translation}}
-                        {{form.language}}
-                    {% endfor %}
-
-                    <input type="submit" class="btn btn-primary btn-lg" value="Submit" style="margin-right: 30px; margin-top: 30px;">
+                    <table class="table d-flex p-2" style="width: 100%">
+                        <tbody>
+                            {% for form in formset %}
+                            <div class="alert-danger">{{formset.non_form_errors.as_text}}</div>
+                            <td class="ml-5">{{form.translation}}  {{form.language}}</td>
+                            {% endfor %}
+                            <td class="ml-5"><input type="submit" class="btn btn-light btn-sm btn-outline-dark" value="Submit"></td>
+                        </tbody>
+                    </table>
                 </form>  
             </div>
         </div>
 
         <div class="d-flex justify-content-center">
-            <a href="{% url 'dictionary:all' %}" class="d-block btn btn-primary btn-lg my-5">BACK</a>
+            <a href="{% url 'dictionary:all' %}" class="d-block btn btn-primary btn-lg my-5 ">Back</a>
         </div>
     </div>   
 </div>
