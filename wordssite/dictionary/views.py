@@ -1,13 +1,19 @@
+from gettext import translation
 from django.views import View
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.views.decorators.csrf import csrf_exempt
+from rest_framework.parsers import JSONParser
 from django.urls import reverse_lazy
 from django.forms import inlineformset_factory, TextInput
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
+
+from wordssite.wordssite.settings import LANGUAGE_CODE
 from .models import Word, Translation
 from .forms import TranslationForm, WordForm
 from django.shortcuts import render, redirect
+from .serializers import WordSerializer, TranslationSerializer
 
 
 class WordBaseView(View):
@@ -85,6 +91,49 @@ class WordUpdateView(WordBaseView, UpdateView):
 class WordDeleteView(WordBaseView, DeleteView):
     """View to delete a Word"""
 
+@csrf_exempt
+def word_list_rest(request):
+    """
+    List all code words, or create a new word.
+    """
+    if request.method == 'GET':
+        words = Word.objects.all()
+        serializer = WordSerializer(words, many=True)
+        return JsonResponse(serializer.data, safe=False)
+
+    elif request.method == 'POST':
+        data = JSONParser().parse(request)
+        serializer = WordSerializer(data=data)
+        if serializer.is_valid():
+            serializer.save()
+            return JsonResponse(serializer.data, status=201)
+        return JsonResponse(serializer.errors, status=400)
+
+@csrf_exempt
+def word_detail_rest(request, pk):
+    """
+    Retrieve, update or delete a code word.
+    """
+    try:
+        word = Word.objects.get(pk=pk)
+    except Word.DoesNotExist:
+        return HttpResponse(status=404)
+
+    if request.method == 'GET':
+        serializer = WordSerializer(word,translation)
+        return JsonResponse(serializer.data)
+
+    elif request.method == 'PUT':
+        data = JSONParser().parse(request)
+        serializer = WordSerializer(word, data=data)
+        if serializer.is_valid():
+            serializer.save()
+            return JsonResponse(serializer.data)
+        return JsonResponse(serializer.errors, status=400)
+
+    elif request.method == 'DELETE':
+        word.delete()
+        return HttpResponse(status=204)
 
 class TranslationBaseView(View):
     model = Translation
