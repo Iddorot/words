@@ -8,8 +8,7 @@ from rest_framework.parsers import JSONParser
 from django.urls import reverse_lazy
 from django.forms import inlineformset_factory, TextInput
 from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
-
-from wordssite.wordssite.settings import LANGUAGE_CODE
+from wordssite.settings import LANGUAGE_CODE
 from .models import Word, Translation
 from .forms import TranslationForm, WordForm
 from django.shortcuts import render, redirect
