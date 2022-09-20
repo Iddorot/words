@@ -27,6 +27,8 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "accounts",
     "dictionary.apps.dictionaryConfig",
+    'rest_framework',
+    "debug_toolbar",
 ]
 
 MIDDLEWARE = [
@@ -37,6 +39,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "debug_toolbar.middleware.DebugToolbarMiddleware",
 ]
 
 ROOT_URLCONF = "wordssite.urls"
@@ -116,3 +119,7 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 # django_project/settings.py
 LOGIN_REDIRECT_URL = "/"
 LOGOUT_REDIRECT_URL = "/"
+
+INTERNAL_IPS = [
+    "127.0.0.1",
+]

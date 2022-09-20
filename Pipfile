@@ -6,6 +6,8 @@ name = "pypi"
 [packages]
 django = "==4.0.4"
 black = "*"
+djangorestframework = "*"
+django-debug-toolbar = "*"
 flake8 = "*"
 
 [dev-packages]
