@@ -30,16 +30,7 @@ class WordHomeView(WordBaseView, ListView):
 
 
 class WordDetailView(WordBaseView, UpdateView):
-    def __init__(self):
-        self.WordFormSet = inlineformset_factory(
-            Word,
-            Translation,
-            fields=("translation", "language"),
-            extra=1,
-            widgets={
-                "translation": TextInput(attrs={"placeholder": "Add Translation"})
-            },
-        )
+
     def get(self, request, pk):
         word = Word.objects.get(pk=pk)
         formset = TranslationFormset(instance=word, queryset=Word.objects.none())
