@@ -6,14 +6,11 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.parsers import JSONParser
 from django.urls import reverse_lazy
-from django.forms import inlineformset_factory, TextInput
-from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
-from wordssite.settings import LANGUAGE_CODE
+from django.http import HttpResponseRedirect
 from .models import Word, Translation
-from .forms import TranslationForm, WordForm
+from .forms import TranslationForm, WordForm, TranslationFormset
 from django.shortcuts import render, redirect
 from .serializers import WordSerializer, TranslationSerializer
-
 
 class WordBaseView(View):
     model = Word
@@ -43,20 +40,21 @@ class WordDetailView(WordBaseView, UpdateView):
                 "translation": TextInput(attrs={"placeholder": "Add Translation"})
             },
         )
-
     def get(self, request, pk):
         word = Word.objects.get(pk=pk)
-        formset = self.WordFormSet(instance=word, queryset=Word.objects.none())
+        formset = TranslationFormset(instance=word, queryset=Word.objects.none())
         context = {"formset": formset, "word": word}
         return render(request, "dictionary/word_detail.html", context)
 
     def post(self, request, pk):
         word = Word.objects.get(pk=pk)
-        formset = self.WordFormSet(request.POST, instance=word)
-        context = {"formset": formset, "word": word}
+        formset = TranslationFormset(request.POST, instance=word)
+        context = {"formset": formset, "word": word,}
         if formset.is_valid():
             formset.save()
-        return HttpResponseRedirect("")
+            return HttpResponseRedirect("#")
+        else:
+            return render(request, "dictionary/word_detail.html", context)
 
 
 class WordCreateView(WordBaseView, CreateView):
@@ -79,7 +77,6 @@ class WordCreateView(WordBaseView, CreateView):
             translation.save()
             next = request.POST.get("next", "/dictionary")
             return HttpResponseRedirect(next)
-
         return render(request, "dictionary/word_form.html", context)
 
 
@@ -88,8 +85,8 @@ class WordUpdateView(WordBaseView, UpdateView):
 
 
 class WordDeleteView(WordBaseView, DeleteView):
-<<<<<<< HEAD
     """View to delete a Word"""
+
 
 @csrf_exempt
 def word_list_rest(request):
@@ -147,30 +144,3 @@ class TranslationUpdateView(TranslationBaseView, UpdateView):
 
 class TranslationDeleteView(TranslationBaseView, DeleteView):
     """View to delete a Translation"""
-||||||| parent of d86efa0 (add to word_detail  all translations)
-    """View to delete a Word"""
-=======
-    """View to delete a Word"""
-
-
-
-class TranslationBaseView(View):
-    model = Translation
-    fields = '__all__'
-    success_url = reverse_lazy('dictionary:all')
-
-class TranslationListView(TranslationBaseView, ListView):
-    """View to list all Translation"""
-
-class TranslationDetailView(TranslationBaseView, DetailView):
-    """View to list the details from one Translation"""
-
-class TranslationCreateView(TranslationBaseView, CreateView):
-    """View to create a new Translation"""
-
-class TranslationUpdateView(TranslationBaseView, UpdateView):
-    """View to update a Translation"""
-
-class TranslationDeleteView(TranslationBaseView, DeleteView):
-    """View to delete a Translation"""
->>>>>>> d86efa0 (add to word_detail  all translations)

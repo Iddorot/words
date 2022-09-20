@@ -22,6 +22,7 @@ urlpatterns = [
         "dictionary/<uuid:pk>/delete/",
         views.WordDeleteView.as_view(),
         name="word_delete",
+<<<<<<< HEAD
     ),path(
         'dictionary/restlist', 
         views.word_list_rest
@@ -29,6 +30,8 @@ urlpatterns = [
     path(
         'dictionary/<uuid:pk>/', 
         views.word_detail_rest
+=======
+>>>>>>> main
     ),
     path(
         "dictionary/translation/<uuid:pk>/update/",

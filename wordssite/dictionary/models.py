@@ -1,7 +1,5 @@
-import datetime
 import uuid
 from django.db import models
-from django.utils import timezone
 from django.conf.global_settings import LANGUAGES
 import random
 
