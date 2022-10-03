@@ -1,8 +1,13 @@
-from django.urls import path, reverse
+from django.urls import path, reverse, include
 from . import views
 from django.views.generic.base import TemplateView
+from rest_framework import routers
 
 app_name = "dictionary"
+
+router = routers.DefaultRouter()
+router.register(r'words', views.WordViewSet)
+router.register(r'translations', views.TranslationViewSet)
 
 urlpatterns = [
     path("", views.WordHomeView.as_view(template_name="home.html"), name="home"),
@@ -22,13 +27,6 @@ urlpatterns = [
         "dictionary/<uuid:pk>/delete/",
         views.WordDeleteView.as_view(),
         name="word_delete",
-    ),path(
-        'dictionary/restlist', 
-        views.word_list_rest
-    ),
-    path(
-        'dictionary/<uuid:pk>/', 
-        views.word_detail_rest
     ),
     path(
         "dictionary/translation/<uuid:pk>/update/",
@@ -40,4 +38,11 @@ urlpatterns = [
         views.TranslationDeleteView.as_view(),
         name="translation_delete",
     ),
+    path(
+        '', include(router.urls)
+    ),
+    path(
+        'api-auth/', include('rest_framework.urls', 
+        namespace='rest_framework')
+    )
 ]
