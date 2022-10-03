@@ -107,3 +107,8 @@ class TranslationViewSet(viewsets.ModelViewSet):
     queryset = Translation.objects.all().order_by('-created_at')
     serializer_class = TranslationSerializer
     permission_classes = [permissions.IsAuthenticated]
+
+    def get_serializer_context(self):
+        context = super(TranslationViewSet, self).get_serializer_context()
+        context.update({"word": self.request.GET})
+        return context
