@@ -4,7 +4,7 @@ from rest_framework import serializers
 from dictionary.models import Word, Translation
 from django.conf.global_settings import LANGUAGES
 
-class WordSerializer(serializers.HyperlinkedModelSerializer):
+class WordSerializer(serializers.ModelSerializer):
     class Meta:
         model = Word
 
@@ -13,12 +13,13 @@ class WordSerializer(serializers.HyperlinkedModelSerializer):
         ]
 
 class TranslationSerializer(serializers.HyperlinkedModelSerializer):
+    word = serializers.CharField(read_only=True)
     class Meta:
         model = Translation
 
-        exclude = ["word",
-        ]
         fields = [
+            "word",
             "translation",
             "language",
         ]
+        
