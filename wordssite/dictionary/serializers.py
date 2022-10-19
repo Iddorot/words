@@ -13,7 +13,7 @@ class WordSerializer(serializers.ModelSerializer):
         ]
 
 class TranslationSerializer(serializers.HyperlinkedModelSerializer):
-    word = serializers.CharField(read_only=True)
+    word = WordSerializer()
     class Meta:
         model = Translation
 
@@ -22,4 +22,10 @@ class TranslationSerializer(serializers.HyperlinkedModelSerializer):
             "translation",
             "language",
         ]
+
+    def create(self, validated_data):
+        wordObject = Word.objects.get(self.word)
+        instance = Translation.objects.create(**validated_data)
+        Translation.objects.create(Word=wordObject, Translation=instance)
+        return instance
         
