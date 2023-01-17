@@ -10,10 +10,8 @@ pool:
   name: vm01-pol
 strategy:
   matrix:
-    Python36:
-      PYTHON_VERSION: '3.6'
     Python37:
-      PYTHON_VERSION: '3.7'
+      PYTHON_VERSION: '3.7.9'
   maxParallel: 3
 
 steps:
