@@ -21,7 +21,7 @@ steps:
   inputs:
     versionSpec: '$(PYTHON_VERSION)'
     architecture: 'x64'
-    githubToken: ${{ secrets.DEVOPS_TOKEN }}
+    githubToken: $(DEVOPS_TOKEN)
 
 - task: PythonScript@0
   displayName: 'Export project path'
