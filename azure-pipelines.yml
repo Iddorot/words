@@ -17,12 +17,13 @@ strategy:
   maxParallel: 3
 
 steps:
+
 - task: UsePythonVersion@0
   inputs:
-    versionSpec: '$(PYTHON_VERSION)'
+    versionSpec: '''$(PYTHON_VERSION)'''
+    disableDownloadFromRegistry: true
+    addToPath: true
     architecture: 'x64'
-    githubToken: $(DEVOPS_TOKEN)
-
 - task: PythonScript@0
   displayName: 'Export project path'
   inputs:
