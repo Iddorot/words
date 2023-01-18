@@ -7,7 +7,7 @@ trigger:
 - main
 
 pool:
-  name: vm01-pol
+  vmImage: ubuntu-latest
 strategy:
   matrix:
     Python37:
